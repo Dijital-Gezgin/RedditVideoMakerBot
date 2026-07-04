@@ -1,0 +1,2 @@
+post-four.txt — başlık eksik, çok kısa
+post-three.txt — başlık eksik, çok kısa

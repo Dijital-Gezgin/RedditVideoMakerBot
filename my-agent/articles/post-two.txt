@@ -1,0 +1,7 @@
+Title: My Article
+
+İkinci makale. Başlığı var, geçerli sayılmalı.
+İçerik yeterince uzun olmalı ki beş satır kontrolünü geçsin.
+Bu satır dördüncü.
+Bu satır beşinci.
+Bu satır altıncı — artık dosya yeterince uzun.
