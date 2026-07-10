@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grafika TR — Ana Sayfa Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f1b2d;
+      --navy-soft: #16263d;
+      --gold: #c9a227;
+      --gold-light: #e8c96a;
+      --cream: #f7f4ef;
+      --text: #2a3340;
+      --muted: #6b7280;
+      --white: #ffffff;
+      --radius: 16px;
+      --shadow: 0 24px 60px rgba(15, 27, 45, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    .mockup-badge {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 5vw;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .logo span { color: var(--gold-light); }
+
+    nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--gold-light); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #b8921f);
+      color: var(--navy);
+      box-shadow: 0 12px 30px rgba(201, 162, 39, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.35);
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(15,27,45,0.92) 0%, rgba(15,27,45,0.55) 55%, rgba(15,27,45,0.25) 100%),
+        url("https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1600&q=80") center/cover;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 5vw 80px 8vw;
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      color: var(--gold-light);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,0.78);
+      font-size: 1.15rem;
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .hero-stats {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 8vw 80px 0;
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      color: var(--white);
+      max-width: 280px;
+      margin-left: auto;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 2rem;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-card span { font-size: 0.9rem; opacity: 0.8; }
+
+    section { padding: 96px 5vw; }
+
+    .section-head {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 56px;
+    }
+
+    .section-head h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    .section-head p { color: var(--muted); font-size: 1.05rem; }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s;
+    }
+
+    .service-card:hover { transform: translateY(-6px); }
+
+    .service-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .service-card div { padding: 24px; }
+
+    .service-card h3 {
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .service-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .service-card a {
+      color: var(--gold);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .portfolio {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .portfolio .section-head h2,
+    .portfolio .section-head p { color: var(--white); }
+    .portfolio .section-head p { opacity: 0.72; }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .project {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+
+    .project img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .project:hover img { transform: scale(1.06); }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,27,45,0.9), transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+    }
+
+    .project-overlay span {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+    }
+
+    .project-overlay h3 { font-size: 1.2rem; }
+
+    .testimonials {
+      background: var(--white);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial {
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 32px;
+      border: 1px solid rgba(15,27,45,0.06);
+    }
+
+    .quote {
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .author strong {
+      display: block;
+      color: var(--navy);
+      font-size: 0.95rem;
+    }
+
+    .author span {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      opacity: 0.55;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-top: 48px;
+    }
+
+    .cta-band {
+      background: linear-gradient(135deg, var(--navy-soft), var(--navy));
+      color: var(--white);
+      text-align: center;
+      border-radius: 24px;
+      padding: 72px 32px;
+      margin: 0 5vw 96px;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-band h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 16px;
+    }
+
+    .cta-band p {
+      opacity: 0.8;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      padding: 48px 5vw 32px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    footer h4 {
+      color: var(--white);
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      display: block;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    footer .logo { margin-bottom: 12px; }
+
+    .copyright {
+      grid-column: 1 / -1;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-stats {
+        flex-direction: row;
+        padding: 0 5vw 48px;
+        overflow-x: auto;
+      }
+      .stat-card { margin-left: 0; min-width: 200px; }
+      .services, .portfolio-grid, .testimonial-grid { grid-template-columns: 1fr 1fr; }
+      nav { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .services, .portfolio-grid, .testimonial-grid { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mockup-badge">Ana Sayfa Mockup</div>
+
+  <header>
+    <div class="logo">Grafika<span>.</span></div>
+    <nav>
+      <a href="#">Hizmetler</a>
+      <a href="#">Projeler</a>
+      <a href="#">Hakkımızda</a>
+      <a href="#">Haberler</a>
+      <a href="#" class="btn btn-primary">Teklif Alın</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">Fuar · Mekân · Tabela</div>
+      <h1>Grafika, tasarımı mekâna dönüştürür.</h1>
+      <p>Fuar standları ve iç mekân dekorasyonlarında yaratıcı fikirleri, güçlü üretim ve kusursuz uygulamayla hayata geçiriyoruz.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">Projenizi Anlatın</a>
+        <a href="#" class="btn btn-outline">Portföyü İnceleyin</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><strong>25+</strong><span>Yıllık deneyim</span></div>
+      <div class="stat-card"><strong>500+</strong><span>Tamamlanan proje</span></div>
+      <div class="stat-card"><strong>40+</strong><span>Ülke & fuar</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Hizmetlerimiz</h2>
+      <p>Fikirden uygulamaya — markanızı fuar alanında ve mekânda en güçlü şekilde temsil ediyoruz.</p>
+    </div>
+    <div class="services">
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1505373877841-8d25f39d4666?auto=format&fit=crop&w=800&q=80" alt="Fuar standı" />
+        <div>
+          <h3>Fuar Standları</h3>
+          <p>Özgün konsept, imalat ve kurulum — tek çatı altında.</p>
+          <a href="#">İnceleyin →</a>
+        </div>
+      </article>
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Mekân tasarımı" />
+        <div>
+          <h3>Mekân Tasarımları</h3>
+          <p>Ofis, showroom ve ticari alanlarda marka deneyimi.</p>
+          <a href="#">İnceleyin →</a>
+        </div>
+      </article>
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80" alt="Tabela" />
+        <div>
+          <h3>Tabelalar</h3>
+          <p>LED aydınlatmalı, dikkat çekici dış mekân çözümleri.</p>
+          <a href="#">İnceleyin →</a>
+        </div>
+      </article>
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80" alt="Grafik tasarım" />
+        <div>
+          <h3>Tasarım</h3>
+          <p>Logo, kurumsal kimlik ve görsel iletişim.</p>
+          <a href="#">İnceleyin →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="portfolio">
+    <div class="section-head">
+      <h2>Öne Çıkan Projeler</h2>
+      <p>Verifone, Panasonic, Savronik ve daha fazlası için tasarladığımız mekânlar.</p>
+    </div>
+    <div class="portfolio-grid">
+      <article class="project">
+        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80" alt="Proje 1" />
+        <div class="project-overlay"><span>Fuar Standı</span><h3>Verifone — CNR Expo</h3></div>
+      </article>
+      <article class="project">
+        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80" alt="Proje 2" />
+        <div class="project-overlay"><span>Mekân</span><h3>Panasonic — Konsept Mağaza</h3></div>
+      </article>
+      <article class="project">
+        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80" alt="Proje 3" />
+        <div class="project-overlay"><span>Fuar Standı</span><h3>Savronik — Teknoloji Fuarı</h3></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="section-head">
+      <h2>Müşterilerimiz Ne Diyor?</h2>
+      <p>Uzun soluklu iş birliklerimizin arkasındaki güven.</p>
+    </div>
+    <div class="testimonial-grid">
+      <blockquote class="testimonial">
+        <p class="quote">"Standımız fuar süresince hem müşterilerimiz hem yönetim kurulumuz tarafından büyük beğeni kazandı."</p>
+        <div class="author"><strong>Ayşe Füsun Tunç</strong><span>Savronik — Tanıtım ve Halkla İlişkiler</span></div>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p class="quote">"Panasonic Klima markasına yakışan 40 konsept mağazayı birlikte oluşturduk. Kalite ve hızlı çözüm."</p>
+        <div class="author"><strong>İbrahim Saruhan</strong><span>Saruhan Ltd. Şti.</span></div>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p class="quote">"Tasarım ve yapım düzeyi yüksek stantlar — prestijli firmayı ancak böyle yansıtabilirsiniz."</p>
+        <div class="author"><strong>Mustafa Demirkan</strong><span>European University of Lefke</span></div>
+      </blockquote>
+    </div>
+    <div class="logos">
+      <span>VERIFONE</span>
+      <span>PANASONIC</span>
+      <span>SAVRONIK</span>
+      <span>YAPIRAY</span>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Projenizi birlikte hayata geçirelim</h2>
+    <p>48 saat içinde konsept teklifi için bize ulaşın. Fikirden fuar alanına kadar yanınızdayız.</p>
+    <a href="#" class="btn btn-primary">Ücretsiz Teklif Alın</a>
+  </div>
+
+  <footer>
+    <div>
+      <div class="logo">Grafika<span>.</span></div>
+      <p>İzmir merkezli fuar standı, mekân tasarımı ve tabela çözümleri.</p>
+    </div>
+    <div>
+      <h4>Hizmetler</h4>
+      <a href="#">Fuar Standları</a>
+      <a href="#">Mekân Tasarımı</a>
+      <a href="#">Tabelalar</a>
+    </div>
+    <div>
+      <h4>İletişim</h4>
+      <a href="#">info@grafika.com.tr</a>
+      <a href="#">+90 xxx xxx xx xx</a>
+      <a href="#">İzmir, Türkiye</a>
+    </div>
+    <div class="copyright">© 2026 Grafika TR — Ana sayfa mockup tasarımı</div>
+  </footer>
+</body>
+</html>
