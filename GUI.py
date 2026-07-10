@@ -1,3 +1,4 @@
+import os
 import webbrowser
 from pathlib import Path
 
@@ -5,6 +6,7 @@ from pathlib import Path
 import tomlkit
 from flask import (
     Flask,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -13,11 +15,12 @@ from flask import (
 )
 
 import utils.gui_utils as gui
+from utils.remote_control import is_authorized, manager
 
-# Set the hostname
-HOST = "localhost"
+# Set the hostname (use 0.0.0.0 to allow remote access)
+HOST = os.environ.get("GUI_HOST", "localhost")
 # Set the port number
-PORT = 4000
+PORT = int(os.environ.get("GUI_PORT", "4000"))
 
 # Configure application
 app = Flask(__name__, template_folder="GUI")
@@ -39,6 +42,62 @@ def after_request(response):
 @app.route("/")
 def index():
     return render_template("index.html", file="videos.json")
+
+
+@app.route("/control", methods=["GET"])
+def control():
+    return render_template("control.html", file="control")
+
+
+def _unauthorized_response():
+    return jsonify({"ok": False, "error": "Unauthorized"}), 401
+
+
+def _check_auth():
+    token = request.headers.get("X-Auth-Token") or request.args.get("token")
+    if not is_authorized(token):
+        return _unauthorized_response()
+    return None
+
+
+@app.route("/api/status", methods=["GET"])
+def api_status():
+    auth_error = _check_auth()
+    if auth_error:
+        return auth_error
+    return jsonify(manager.get_status())
+
+
+@app.route("/api/logs", methods=["GET"])
+def api_logs():
+    auth_error = _check_auth()
+    if auth_error:
+        return auth_error
+    since = request.args.get("since", default=0, type=int)
+    return jsonify({"logs": manager.get_logs(since)})
+
+
+@app.route("/api/start", methods=["POST"])
+def api_start():
+    auth_error = _check_auth()
+    if auth_error:
+        return auth_error
+
+    post_id = request.form.get("post_id", "").strip() or None
+    result = manager.start(post_id)
+    status_code = 200 if result.get("ok") else 409
+    return jsonify(result), status_code
+
+
+@app.route("/api/stop", methods=["POST"])
+def api_stop():
+    auth_error = _check_auth()
+    if auth_error:
+        return auth_error
+
+    result = manager.stop()
+    status_code = 200 if result.get("ok") else 409
+    return jsonify(result), status_code
 
 
 @app.route("/backgrounds", methods=["GET"])
@@ -111,6 +170,9 @@ def voices(name):
 
 # Run browser and start the app
 if __name__ == "__main__":
-    webbrowser.open(f"http://{HOST}:{PORT}", new=2)
-    print("Website opened in new tab. Refresh if it didn't load.")
-    app.run(port=PORT)
+    if HOST in ("localhost", "127.0.0.1"):
+        webbrowser.open(f"http://{HOST}:{PORT}", new=2)
+        print("Website opened in new tab. Refresh if it didn't load.")
+    else:
+        print(f"Remote control GUI listening on http://{HOST}:{PORT}")
+    app.run(host=HOST, port=PORT)
