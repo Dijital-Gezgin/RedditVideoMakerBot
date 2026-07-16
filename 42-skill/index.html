@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>42 Skill — Organizasyon Şeması</title>
+  <meta name="description" content="Aynı departmanlar. Aynı çıktı. Maaş bordrosu yok. Claude skill’lerini gerçek bir organizasyon şeması gibi yapılandır." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0e1210;
+      --ink-soft: #1a211c;
+      --panel: #152019;
+      --line: rgba(200, 245, 66, 0.22);
+      --line-strong: rgba(200, 245, 66, 0.45);
+      --lime: #c8f542;
+      --lime-dim: #9bbf2e;
+      --fog: #d7e0d4;
+      --muted: #8a978c;
+      --white: #f4f7f2;
+      --dev: #6ee7b7;
+      --design: #fbbf24;
+      --mkt: #67e8f9;
+      --social: #f9a8d4;
+      --finance: #a5b4fc;
+      --smb: #fdba74;
+      --legal: #c4b5fd;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Sora", sans-serif;
+      color: var(--fog);
+      background: var(--ink);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    /* Atmosphere */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(200, 245, 66, 0.14), transparent 55%),
+        radial-gradient(ellipse 40% 40% at 100% 30%, rgba(103, 232, 249, 0.06), transparent 50%),
+        radial-gradient(ellipse 35% 35% at 0% 70%, rgba(249, 168, 212, 0.05), transparent 50%),
+        linear-gradient(180deg, #0e1210 0%, #121816 40%, #0e1210 100%);
+    }
+    .bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black 20%, transparent 75%);
+      opacity: 0.55;
+      animation: gridDrift 28s linear infinite;
+    }
+    @keyframes gridDrift {
+      from { transform: translateY(0); }
+      to { transform: translateY(72px); }
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 2.5rem));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.35rem 0;
+      animation: fadeDown 0.8s ease both;
+    }
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      text-decoration: none;
+    }
+    .brand-mark {
+      font-family: "Instrument Serif", serif;
+      font-size: 1.85rem;
+      letter-spacing: -0.02em;
+      color: var(--white);
+    }
+    .brand-mark em {
+      font-style: italic;
+      color: var(--lime);
+    }
+    .brand-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--lime);
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .header-cta:hover {
+      background: rgba(200, 245, 66, 0.1);
+      transform: translateY(-1px);
+    }
+
+    /* Hero — one composition */
+    .hero {
+      min-height: calc(100svh - 5rem);
+      display: grid;
+      align-content: center;
+      gap: 1.5rem;
+      padding: 2rem 0 4rem;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 2px;
+      height: 4.5rem;
+      background: linear-gradient(to bottom, var(--lime), transparent);
+      transform: translateX(-50%);
+      animation: pulseLine 2.4s ease-in-out infinite;
+    }
+    @keyframes pulseLine {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 1; }
+    }
+
+    .hero-brand {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(4.2rem, 14vw, 9.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      animation: fadeUp 0.9s ease both;
+    }
+    .hero-brand span {
+      display: block;
+      color: var(--lime);
+      font-style: italic;
+    }
+    .hero h1 {
+      max-width: 18ch;
+      font-size: clamp(1.35rem, 3.2vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--fog);
+      animation: fadeUp 0.9s ease 0.12s both;
+    }
+    .hero p {
+      max-width: 36ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      animation: fadeUp 0.9s ease 0.22s both;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.35rem;
+      animation: fadeUp 0.9s ease 0.32s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.9rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn-primary {
+      background: var(--lime);
+      color: var(--ink);
+      box-shadow: 0 0 0 0 rgba(200, 245, 66, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(200, 245, 66, 0.25);
+    }
+    .btn-ghost {
+      border: 1px solid rgba(215, 224, 212, 0.22);
+      color: var(--fog);
+    }
+    .btn-ghost:hover {
+      border-color: var(--lime);
+      color: var(--lime);
+    }
+
+    .pitch {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.25rem;
+      margin-top: 0.5rem;
+      animation: fadeUp 0.9s ease 0.4s both;
+    }
+    .pitch span {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pitch span strong {
+      color: var(--lime);
+      font-weight: 700;
+    }
+
+    /* Cursor connect */
+    .cursor-connect {
+      padding: 0 0 4rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .cursor-card {
+      background: linear-gradient(165deg, rgba(200, 245, 66, 0.1), rgba(21, 32, 25, 0.95));
+      border: 1px solid var(--line-strong);
+      border-radius: 22px;
+      padding: clamp(1.5rem, 4vw, 2.4rem);
+    }
+    .cursor-kicker {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 0.65rem;
+    }
+    .cursor-card h2 {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.35rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      max-width: 22ch;
+      line-height: 1.15;
+    }
+    .cursor-card > p {
+      margin-top: 0.75rem;
+      color: var(--muted);
+      max-width: 52ch;
+      font-size: 0.95rem;
+    }
+    .cursor-card code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85em;
+      color: var(--lime);
+    }
+    .install-cmd {
+      margin: 1.25rem 0 1.35rem;
+      padding: 1rem 1.15rem;
+      background: var(--ink);
+      border: 1px solid rgba(200, 245, 66, 0.28);
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+    .install-cmd code {
+      font-size: 0.9rem;
+      color: var(--fog);
+      white-space: nowrap;
+    }
+    .cursor-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+    .cursor-steps div {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      padding: 0.85rem;
+      background: rgba(0, 0, 0, 0.22);
+      border-radius: 12px;
+      font-size: 0.82rem;
+      color: var(--fog);
+      line-height: 1.4;
+    }
+    .cursor-steps strong {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--lime);
+      color: var(--ink);
+      font-size: 0.75rem;
+    }
+    .cursor-note {
+      margin-top: 1rem !important;
+      font-size: 0.8rem !important;
+    }
+    @media (max-width: 720px) {
+      .cursor-steps { grid-template-columns: 1fr; }
+    }
+
+    /* Org chart */
+    .org {
+      padding: 5rem 0 6rem;
+    }
+    .org-head {
+      text-align: center;
+      margin-bottom: 2.75rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .org-head h2 {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--white);
+    }
+    .org-head p {
+      margin-top: 0.65rem;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .ceo {
+      width: min(280px, 100%);
+      margin: 0 auto 1.75rem;
+      padding: 1.25rem 1.4rem;
+      background: linear-gradient(160deg, rgba(200, 245, 66, 0.16), rgba(21, 32, 25, 0.9));
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      text-align: center;
+      position: relative;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+    .ceo .role {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .ceo .name {
+      font-family: "Instrument Serif", serif;
+      font-size: 1.65rem;
+      color: var(--white);
+      margin-top: 0.2rem;
+    }
+    .ceo .meta {
+      margin-top: 0.35rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .trunk {
+      width: 2px;
+      height: 2rem;
+      margin: 0 auto;
+      background: var(--line-strong);
+    }
+    .rail {
+      position: relative;
+      height: 2px;
+      margin: 0 auto 0;
+      width: min(100%, 1040px);
+      background: var(--line-strong);
+    }
+
+    .depts {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.75rem;
+      width: min(100%, 1040px);
+      margin: 0 auto;
+      padding-top: 0;
+    }
+    .dept-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+    }
+    .stem {
+      width: 2px;
+      height: 1.5rem;
+      background: var(--line-strong);
+      flex-shrink: 0;
+    }
+
+    .dept {
+      width: 100%;
+      background: var(--panel);
+      border: 1px solid rgba(215, 224, 212, 0.1);
+      border-radius: 16px;
+      padding: 0.95rem 0.8rem 1rem;
+      transition: border-color 0.2s, transform 0.25s, box-shadow 0.25s;
+      animation: fadeUp 0.7s ease both;
+    }
+    .dept:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+    .dept[data-dept="dev"] { --accent: var(--dev); animation-delay: 0.05s; }
+    .dept[data-dept="design"] { --accent: var(--design); animation-delay: 0.1s; }
+    .dept[data-dept="mkt"] { --accent: var(--mkt); animation-delay: 0.15s; }
+    .dept[data-dept="social"] { --accent: var(--social); animation-delay: 0.2s; }
+    .dept[data-dept="finance"] { --accent: var(--finance); animation-delay: 0.25s; }
+    .dept[data-dept="smb"] { --accent: var(--smb); animation-delay: 0.3s; }
+    .dept[data-dept="legal"] { --accent: var(--legal); animation-delay: 0.35s; }
+
+    .dept-top {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(215, 224, 212, 0.08);
+    }
+    .dept-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .dept-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      line-height: 1.25;
+    }
+    .dept-count {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .dept-blurb {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+
+    .skills {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .skills a {
+      display: block;
+      padding: 0.45rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--fog);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      line-height: 1.3;
+    }
+    .skills a:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+      color: var(--white);
+    }
+    .skills a .src {
+      display: block;
+      margin-top: 0.12rem;
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .collection-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.7rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .collection-link:hover { text-decoration: underline; }
+
+    /* Foot note */
+    .note {
+      margin-top: 3.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+      max-width: 42ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .note strong { color: var(--fog); font-weight: 600; }
+
+    footer {
+      border-top: 1px solid rgba(215, 224, 212, 0.08);
+      padding: 1.75rem 0 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    footer .brand-mark { font-size: 1.25rem; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobile: stack departments */
+    @media (max-width: 1100px) {
+      .rail { display: none; }
+      .depts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        gap: 1rem;
+      }
+      .stem { display: none; }
+      .dept-col { align-items: stretch; }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 1.5rem, 1180px); }
+      .hero { min-height: auto; padding: 1.5rem 0 3.5rem; }
+      .hero-brand { font-size: clamp(3.4rem, 18vw, 5rem); }
+      .depts { grid-template-columns: 1fr; }
+      .header-cta span { display: none; }
+      .pitch { gap: 0.45rem 0.9rem; }
+      .trunk { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#">
+        <span class="brand-mark">42 <em>Skill</em></span>
+        <span class="brand-tag">Org</span>
+      </a>
+      <a class="header-cta" href="#cursor">Cursor’a bağla <span>↓</span></a>
+    </header>
+
+    <section class="hero" aria-label="Giriş">
+      <div class="hero-brand">42<span>Skill</span></div>
+      <h1>Gerçek bir organizasyon şeması gibi yapılandırılmış AI ekibi.</h1>
+      <p>Aynı departmanlar. Aynı çıktı. Maaş bordrosu yok.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#cursor">Cursor’a bağla</a>
+        <a class="btn btn-ghost" href="#sema">Departmanları aç</a>
+      </div>
+      <div class="pitch">
+        <span><strong>7</strong> departman</span>
+        <span><strong>140+</strong> skill</span>
+        <span><strong>Cursor</strong> hazır</span>
+      </div>
+    </section>
+
+    <section class="cursor-connect" id="cursor" aria-label="Cursor kurulumu">
+      <div class="cursor-card">
+        <p class="cursor-kicker">Cursor bağlantısı</p>
+        <h2>Tek komutla tüm departmanları Cursor’a yükle</h2>
+        <p>Skill’ler proje içi <code>.agents/skills/</code> dizinine kurulur. Cursor Agent yeni sohbette onları otomatik görür.</p>
+        <pre class="install-cmd"><code>bash install-cursor-skills.sh</code></pre>
+        <div class="cursor-steps">
+          <div><strong>1</strong><span>Cursor’da <code>42-skill</code> klasörünü aç (video maker değil)</span></div>
+          <div><strong>2</strong><span>Bu klasörde <code>bash install-cursor-skills.sh</code></span></div>
+          <div><strong>3</strong><span>Yeni Agent sohbeti — işe göre skill tetiklenir</span></div>
+        </div>
+        <p class="cursor-note">Maaş bordrosu (<code>plan-payroll</code>) bilinçli olarak hariç tutuldu.</p>
+      </div>
+    </section>
+
+    <section class="org" id="sema" aria-label="Organizasyon şeması">
+      <div class="org-head">
+        <h2>Organizasyon şeması</h2>
+        <p>Her skill gerçek — linklerden tek tıkla yüklenebiliyor.</p>
+      </div>
+
+      <div class="ceo">
+        <div class="role">Merkez</div>
+        <div class="name">Claude + Skills</div>
+        <div class="meta">Departman bazlı uzmanlık katmanı</div>
+      </div>
+      <div class="trunk" aria-hidden="true"></div>
+      <div class="rail" aria-hidden="true"></div>
+
+      <div class="depts">
+        <!-- Geliştiriciler -->
+        <div class="dept-col">
+          <div class="stem" aria-hidden="true"></div>
+          <article class="dept" data-dept="dev">
+            <div class="dept-top">
+              <span class="dept-label">Mühendislik</span>
+              <h3 class="dept-title">Geliştiriciler</h3>
+              <span class="dept-count">6 skill</span>
+            </div>
+            <ul class="skills">
+              <li>
+                <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">
+                  Superpowers
+                  <span class="src">obra/superpowers</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/upstash/context7" target="_blank" rel="noopener">
+                  Context7
+                  <span class="src">upstash/context7</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/anthropics/skills/tree/main/skills/skill-creator" target="_blank" rel="noopener">
+                  Skill Creator
+                  <span class="src">anthropics/skills</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/anthropics/skills/tree/main/skills/mcp-builder" target="_blank" rel="noopener">
+                  MCP Builder
+                  <span class="src">anthropics/skills</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/anthropics/skills/tree/main/skills/webapp-testing" target="_blank" rel="noopener">
+                  Webapp Testing
+                  <span class="src">anthropics/skills</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/thedotmack/claude-mem" target="_blank" rel="noopener">
+                  Claude-Mem
+                  <span class="src">thedotmack/claude-mem</span>
+                </a>
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Tasarımcılar -->
+        <div class="dept-col">
+          <div class="stem" aria-hidden="true"></div>
+          <article class="dept" data-dept="design">
+            <div class="dept-top">
+              <span class="dept-label">Tasarım</span>
+              <h3 class="dept-title">Tasarımcılar</h3>
+              <span class="dept-count">6 skill</span>
+            </div>
+            <ul class="skills">
+              <li>
+                <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank" rel="noopener">
+                  UI UX Pro Max
+                  <span class="src">nextlevelbuilder</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noopener">
+                  Taste
+                  <span class="src">Leonxlnx/taste-skill</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noopener">
+                  Frontend Design
+                  <span class="src">Leonxlnx/taste-skill</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/Jakubantalik/transitions-dev" target="_blank" rel="noopener">
+                  Transitions
+                  <span class="src">Jakubantalik</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/anthropics/skills/tree/main/skills/web-artifacts-builder" target="_blank" rel="noopener">
+                  Web Artifacts
+                  <span class="src">anthropics/skills</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/anthropics/skills/tree/main/skills/brand-guidelines" target="_blank" rel="noopener">
+                  Brand Guidelines
+                  <span class="src">anthropics/skills</span>
+                </a>
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Pazarlama -->
+        <div class="dept-col">
+          <div class="stem" aria-hidden="true"></div>
+          <article class="dept" data-dept="mkt">
+            <div class="dept-top">
+              <span class="dept-label">Growth</span>
+              <h3 class="dept-title">Pazarlama</h3>
+              <span class="dept-count">45 skill</span>
+            </div>
+            <p class="dept-blurb">Kopya yazımından SEO’ya, lead magnet’lere kadar tam pazarlama stack’i.</p>
+            <ul class="skills">
+              <li>
+                <a href="https://github.com/coreyhaines31/marketingskills/tree/main/skills/copywriting" target="_blank" rel="noopener">
+                  Copywriting
+                  <span class="src">marketingskills</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/coreyhaines31/marketingskills/tree/main/skills/seo-audit" target="_blank" rel="noopener">
+                  SEO Audit
+                  <span class="src">marketingskills</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/coreyhaines31/marketingskills/tree/main/skills/lead-magnets" target="_blank" rel="noopener">
+                  Lead Magnets
+                  <span class="src">marketingskills</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/coreyhaines31/marketingskills/tree/main/skills/cro" target="_blank" rel="noopener">
+                  CRO
+                  <span class="src">marketingskills</span>
+                </a>
+              </li>
+            </ul>
+            <a class="collection-link" href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener">
+              Tam liste →
+            </a>
+          </article>
+        </div>
+
+        <!-- Sosyal Medya -->
+        <div class="dept-col">
+          <div class="stem" aria-hidden="true"></div>
+          <article class="dept" data-dept="social">
+            <div class="dept-top">
+              <span class="dept-label">İçerik</span>
+              <h3 class="dept-title">Sosyal Medya</h3>
+              <span class="dept-count">17 skill</span>
+            </div>
+            <p class="dept-blurb">Post yazımından Reels’e, thumbnail’e kadar içerik sistemi.</p>
+            <ul class="skills">
+              <li>
+                <a href="https://github.com/charlie947/social-media-skills/tree/main/skills/post-writer" target="_blank" rel="noopener">
+                  Post Writer
+                  <span class="src">charlie947</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/charlie947/social-media-skills/tree/main/skills/reels-scripting" target="_blank" rel="noopener">
+                  Reels Scripting
+                  <span class="src">charlie947</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/charlie947/social-media-skills/tree/main/skills/youtube-thumbnail" target="_blank" rel="noopener">
+                  YouTube Thumbnail
+                  <span class="src">charlie947</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/charlie947/social-media-skills/tree/main/skills/voice-builder" target="_blank" rel="noopener">
+                  Voice Builder
+                  <span class="src">charlie947</span>
+                </a>
+              </li>
+            </ul>
+            <a class="collection-link" href="https://github.com/charlie947/social-media-skills" target="_blank" rel="noopener">
+              Tam liste →
+            </a>
+          </article>
+        </div>
+
+        <!-- Finans -->
+        <div class="dept-col">
+          <div class="stem" aria-hidden="true"></div>
+          <article class="dept" data-dept="finance">
+            <div class="dept-top">
+              <span class="dept-label">Muhasebe</span>
+              <h3 class="dept-title">Finans</h3>
+              <span class="dept-count">8 skill</span>
+            </div>
+            <p class="dept-blurb">Bilanço, mutabakat ve denetim akışları.</p>
+            <ul class="skills">
+              <li>
+                <a href="https://claude.com/plugins/finance" target="_blank" rel="noopener">
+                  Journal Entry
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/finance" target="_blank" rel="noopener">
+                  Reconciliation
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/finance" target="_blank" rel="noopener">
+                  Income Statement
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/finance" target="_blank" rel="noopener">
+                  SOX Testing
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+            </ul>
+            <a class="collection-link" href="https://claude.com/plugins/finance" target="_blank" rel="noopener">
+              Tam liste →
+            </a>
+          </article>
+        </div>
+
+        <!-- Küçük İşletme -->
+        <div class="dept-col">
+          <div class="stem" aria-hidden="true"></div>
+          <article class="dept" data-dept="smb">
+            <div class="dept-top">
+              <span class="dept-label">Operasyon</span>
+              <h3 class="dept-title">Küçük İşletme</h3>
+              <span class="dept-count">31 skill</span>
+            </div>
+            <p class="dept-blurb">Nakit akışından faturaya — işletmeyi koşturan workflow’lar.</p>
+            <ul class="skills">
+              <li>
+                <a href="https://claude.com/plugins/small-business" target="_blank" rel="noopener">
+                  Cash Flow
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/small-business" target="_blank" rel="noopener">
+                  Invoice Chase
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/small-business" target="_blank" rel="noopener">
+                  Month-End Close
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/small-business" target="_blank" rel="noopener">
+                  Growth Campaign
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+            </ul>
+            <a class="collection-link" href="https://claude.com/plugins/small-business" target="_blank" rel="noopener">
+              Tam liste →
+            </a>
+          </article>
+        </div>
+
+        <!-- Hukuk -->
+        <div class="dept-col">
+          <div class="stem" aria-hidden="true"></div>
+          <article class="dept" data-dept="legal">
+            <div class="dept-top">
+              <span class="dept-label">Uyumluluk</span>
+              <h3 class="dept-title">Hukuk</h3>
+              <span class="dept-count">9 skill</span>
+            </div>
+            <p class="dept-blurb">Sözleşme incelemesinden NDA ve uyumluluğa.</p>
+            <ul class="skills">
+              <li>
+                <a href="https://claude.com/plugins/legal" target="_blank" rel="noopener">
+                  Contract Review
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/legal" target="_blank" rel="noopener">
+                  NDA Triage
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/legal" target="_blank" rel="noopener">
+                  Vendor Check
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://claude.com/plugins/legal" target="_blank" rel="noopener">
+                  Compliance Brief
+                  <span class="src">claude.com/plugins</span>
+                </a>
+              </li>
+            </ul>
+            <a class="collection-link" href="https://claude.com/plugins/legal" target="_blank" rel="noopener">
+              Tam liste →
+            </a>
+          </article>
+        </div>
+      </div>
+
+      <p class="note">
+        <strong>Aynı departmanlar. Aynı çıktı.</strong>
+        Maaş bordrosu yok — sadece tek tıkla yüklenebilir skill’ler.
+      </p>
+    </section>
+
+    <footer>
+      <span class="brand-mark">42 <em style="font-family:Instrument Serif,serif;font-style:italic;color:var(--lime)">Skill</em></span>
+      <span>Kaynaklar GitHub ve Claude Plugins üzerinden açık.</span>
+    </footer>
+  </div>
+</body>
+</html>
