@@ -1,0 +1,18 @@
+---
+description: 42 Skill organizasyon şeması — departman bazlı Cursor skill’leri
+alwaysApply: true
+---
+
+# 42 Skill Org
+
+Bu workspace’te Agent Skills departmanlara göre kurulu (`.agents/skills/`).
+
+- Geliştirme / debug / plan → Superpowers, Context7 (`find-docs`), webapp-testing, mcp-builder
+- UI / frontend / marka → ui-ux-pro-max, design-taste-frontend, frontend-design, transitions-dev, brand-guidelines
+- Pazarlama → marketingskills (copywriting, seo-audit, cro, lead-magnets…)
+- Sosyal medya → post-writer, reels-scripting, youtube-thumbnail, voice-builder…
+- Finans → journal-entry, reconciliation, financial-statements, sox-testing…
+- Küçük işletme → cash-flow-snapshot, invoice-chase, close-month, run-campaign… (maaş bordrosu / plan-payroll yok)
+- Hukuk → review-contract, triage-nda, vendor-check, compliance-check…
+
+İlgili iş geldiğinde doğru skill’i oku ve uygula. Görsel harita: `mockups/skill-org/index.html`.
