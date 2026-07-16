@@ -15,4 +15,5 @@ Bu workspace’te Agent Skills departmanlara göre kurulu (`.agents/skills/`).
 - Küçük işletme → cash-flow-snapshot, invoice-chase, close-month, run-campaign… (maaş bordrosu / plan-payroll yok)
 - Hukuk → review-contract, triage-nda, vendor-check, compliance-check…
 
-İlgili iş geldiğinde doğru skill’i oku ve uygula. Görsel harita: `mockups/skill-org/index.html`.
+İlgili iş geldiğinde doğru skill’i oku ve uygula. Görsel harita: `index.html`.
+Bu workspace yalnızca 42 Skill org içindir; Reddit Video Maker Bot değildir.

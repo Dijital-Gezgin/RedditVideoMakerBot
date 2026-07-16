@@ -6,7 +6,11 @@ set -euo pipefail
 AGENT="${AGENT:-cursor}"
 FLAGS=(-a "$AGENT" --copy -y)
 
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "$ROOT"
+
 echo "==> 42 Skill org → Cursor ($AGENT)"
+echo "    Dizin: $ROOT"
 echo
 
 install_pkg() {
